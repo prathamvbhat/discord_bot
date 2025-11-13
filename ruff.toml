@@ -1,0 +1,85 @@
+# ---- General ----
+line-length = 100
+target-version = "py311"
+cache-dir = ".ruff_cache"
+
+# ---- Core Lint Rules ----
+[lint]
+extend-select = [
+  # --- Core ---
+  "E",   # pycodestyle (PEP8)
+  "F",   # pyflakes (logic errors)
+  "I",   # import sorting (isort)
+  "B",   # flake8-bugbear (bad patterns)
+  "UP",  # pyupgrade (modern Python)
+  "N",   # pep8-naming (consistent naming)
+  "A",   # flake8-builtins (avoid shadowing builtins)
+  "C4",  # flake8-comprehensions (cleaner comprehensions)
+  "DTZ", # flake8-datetimez (timezone-safe datetimes)
+  "S",   # flake8-bandit (security checks)
+  "DJ",  # flake8-django (Django best practices)
+  "RET", # flake8-return (consistent return usage)
+  "T20", # flake8-print (forbid print/debug)
+  "PL",  # pylint-inspired (readability, design)
+  "RUF", # Ruff-specific rules
+]
+
+# ---- Enforced Fixing Behavior ----
+# Automatically fix what Ruff can (safe fixes only)
+fixable = ["ALL"]
+unfixable = [
+  "F841",  # unused variables — require manual fix
+  "S101",  # assert usage — must be reviewed
+]
+
+# ---- Ignore List ----
+ignore = [
+  "E501",   # line too long (formatter handles it)
+  "DJ001",  # allow model Meta without verbose_name
+  "UP037",  # allow old-style type annotations if needed
+]
+
+# ---- Import Sorting Rules ----
+[lint.isort]
+known-first-party = ["project_name"]
+combine-as-imports = true
+lines-between-types = 1
+
+# ---- Formatting ----
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+docstring-code-format = true
+
+# ---- Plugin Configs ----
+[lint.flake8-bandit]
+# Don’t flag harmless Django patterns
+assert-used = true
+check-xml-etree = true
+
+[lint.pep8-naming]
+classmethod-decorators = ["classmethod"]
+staticmethod-decorators = ["staticmethod"]
+
+# ---- Per-file Ignores ----
+[lint.per-file-ignores]
+"**/migrations/*.py" = ["ALL"]   # Migrations are generated code
+"**/tests/*.py" = ["S101", "S311"]  # Allow assert & random for tests
+
+# ---- Exclusions ----
+exclude = [
+  ".git",
+  ".mypy_cache",
+  ".ruff_cache",
+  "__pycache__",
+  "build",
+  "dist",
+  "venv",
+  ".venv",
+  "docs",
+]
+
+# ---- Performance ----
+preview = false
+respect-gitignore = true
