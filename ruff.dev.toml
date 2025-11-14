@@ -1,0 +1,69 @@
+# ==========================================================
+# Ruff Configuration — Django + Modern Python Project
+# Standardized for both Dev and Prod environments
+# ==========================================================
+
+# ---- General ----
+line-length = 100
+target-version = "py311"   # adjust if you're on 3.12+
+
+# ---- Lint Rules ----
+[lint]
+# Core rule sets to enforce quality
+extend-select = [
+  "E",   # pycodestyle errors
+  "F",   # pyflakes
+  "I",   # isort (import sorting)
+  "B",   # flake8-bugbear (common bugs)
+  "UP",  # pyupgrade (modern Python syntax)
+  "N",   # pep8-naming
+  "DJ",  # flake8-django (django best practices)
+  "S",   # flake8-bandit (security checks)
+  "A",   # flake8-builtins (avoid shadowing builtins)
+  "T20", # flake8-print (no print statements in prod)
+  "C4",  # flake8-comprehensions
+]
+
+# Optional ignores — you can tighten these later
+ignore = [
+  "E501",  # line too long (handled by formatter)
+  "DJ001", # allow model Meta classes without verbose_name
+  "S101",  # assert used (fine in tests)
+  "T201",  # allow print during development
+]
+
+# Automatically fix what Ruff can
+fixable = ["ALL"]
+
+# ---- Import Sorting ----
+[lint.isort]
+known-first-party = ["project_name"]
+combine-as-imports = true
+
+# ---- Formatter ----
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+# ---- Per-file rules ----
+[lint.per-file-ignores]
+"**/migrations/*.py" = ["ALL"]
+"tests/**/*.py" = ["S101", "S311", "T201", "B008"]
+"scripts/**/*.py" = ["T201", "S603", "S607"]
+
+# ---- Exclusions ----
+exclude = [
+  ".git",
+  ".mypy_cache",
+  ".ruff_cache",
+  "__pycache__",
+  "build",
+  "dist",
+  "venv",
+  ".venv",
+]
+
+# ---- Security Overrides ----
+[lint.flake8-bandit]
+assert-used = false
