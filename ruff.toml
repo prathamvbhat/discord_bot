@@ -55,7 +55,6 @@ docstring-code-format = true
 # ---- Plugin Configs ----
 [lint.flake8-bandit]
 # Don’t flag harmless Django patterns
-assert-used = true
 check-xml-etree = true
 
 [lint.pep8-naming]
